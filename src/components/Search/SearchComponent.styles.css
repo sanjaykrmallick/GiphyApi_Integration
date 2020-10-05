@@ -1,0 +1,16 @@
+#template{
+    /* display:none; */
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    text-align: center;
+    width: 1200px;
+    margin: 25px auto;
+    border-radius: 10px;
+    background:linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)), url("../..//images/Glare-Background-Blur.jpg");
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    backdrop-filter: blur(5px);
+}
