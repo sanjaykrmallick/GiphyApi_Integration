@@ -1,27 +1,5 @@
-
 import React, { Component, Fragment } from 'react';
-// import { } from 'mdbreact'
-// import {input} from 'mdbbootstrap'
-// const apiKey=`K447WmBKHQuT6URO6t6Lxjxuo4bGMNxr`;
-import axios from 'axios';
-const url= `https://upload.giphy.com/v1/gifs`
 const api_key= `K447WmBKHQuT6URO6t6Lxjxuo4bGMNxr`;
-
-
-// const submitForm=(contentType, data, setResponse)=> {
-// 	axios({
-// 	url: `https://upload.giphy.com/v1/gifs`,
-// 	method: 'POST',
-// 	data: data,
-
-// 	}).then((response) => {
-// 		console.log("response: ",response);
-// 	setResponse(response.data);
-
-// 	}).catch((error) => {
-// 	setResponse("error");
-// 	})
-// }
 
 class UploadComponent extends Component {
     constructor(props) {
@@ -29,164 +7,61 @@ class UploadComponent extends Component {
         this.state = {
 				url:'',
 				attachToken: false,
-				params: {},
+        file: null,
+        api_key:"",
                 // tags : '',
                 // source_post_url: ''
-
          }
-         this._uploadFileGif=this._uploadFileGif.bind(this)
-        //  this._onSubmit=this._onSubmit.bind(this)
+         this._handleOnChange=this._handleOnChange.bind(this)
+         this._handleOnSubmit=this._handleOnSubmit.bind(this)
+         this._uploadFile=this._uploadFile.bind(this)
     }
 
-    _uploadFileGif=(e)=>{
-        //  async (signedRequest, file) => {
-        //     const base64 = await fs.readFile(file.uri, 'base64')
-        //     const buffer = Buffer.from(base64, 'base64')
-        //     return fetch(signedRequest, {
-        //       method: 'PUT',
-        //       headers: {
-        //       'Content-Type': 'image/gif; charset=utf-8',
-        //       'x-amz-acl': 'public-read',
-        //      },
-        //       body: buffer,
-        //     })
 
-        e.preventDefault();
-
-            let reader = new FileReader();
-            let file1 = e.target.files[0];
-            console.log("file: ",file1)
-
-            reader.onloadend = () => {
-              this.setState({
-				url: url,
-                attachToken: false,
-                params:{
-					api_key:api_key,
-					file:file1,
-				}
-
-
-                // tags: "",
-              });
-            }
-           return reader.readAsDataURL(file1);
-
+    _handleOnChange = (e) => {
+      e.preventDefault();
+      this.setState({file:e.target.files[0] , api_key:api_key , attachToken:true})
     }
 
-    _onSubmit= async (
-		url,
-		attachToken = false,
-		params = {}
-	  ) => {
-		let headers = {
-		  Accept: "application/json",
-		  "Content-Type": "application/json"
-		};
-		// if (attachToken) {
-		//   try {
-		// 	const authToken = await getToken();
-		// 	if (authToken) {
-		// 	  headers["Authorization"] = "Bearer " + authToken;
-		// 	}
-		//   } catch (e) {
-		// 	console.log("Error fetching auth token: ", e);
-		//   }
-		// }
-		return new Promise((resolve, reject) => {
-		  try {
-			fetch(url, {
-			  method: "POST",
-			  headers: headers,
-			  body: JSON.stringify(params)
-			})
-			  .then(
-				res => res.json(),
-				error => {
-				  reject(error);
-				}
-			  )
-			  .then(
-				jsonResponse => {
-				  if (jsonResponse.error === false) {
-					resolve("success:",jsonResponse);
-				  } else {
-					console.log(jsonResponse);
-					reject("reject:",jsonResponse);
-				  }
-				},
-				error => {
-				  reject(error);
-				}
-			  )
-			  .catch(error => {
-				reject(error);
-			  });
-		  } catch (e) {
-			console.log(e);
-			reject();
-		  }
-		});
-	  };
-		
-        // fetch('https://upload.giphy.com/v1/gifs', {
-        //     // content-type header should not be specified!
-        //     method: 'POST',
-        //     body: JSON.stringify(this.state),
-        // })
-        // .then(response => response.json())
-        // .then(success => {
-        //     console.log("success: ",success)
-        //     })
-        // .catch(error => console.log(error)
-        // );
-
-        // const formData = new FormData();
-		// formData.append("api_key",this.state.api_key);
-		// formData.append("file",this.state.file);
-
-        // // eslint-disable-next-line no-undef
-        // submitForm("multipart/form-data", formData, (msg) => console.log("msg",msg));
-
-		
-    
-
-     
+    _handleOnSubmit =(e) =>{
+      e.preventDefault();
+      this._uploadFile(this.state.file)
+      }
 
 
-    // _uploadFileUrl=(e)=>{
+    _uploadFile=(files)=> {
+  
+      let headers = {}
+      var formData = new FormData();
+        formData.append('file',files);
+        formData.append('api_key',api_key);
 
-    //     let reader = new FileReader();
-    //     let file = e.target.files[0];
 
-    //     reader.onload = () => {
-    //       this.setState({
-    //         file: file,
-    //         tags: ""q
-    //       });
-    //     }
-
-    // }
-
+      fetch('https://upload.giphy.com/v1/gifs', {
+        // content-type header should not be specified!
+        method: 'POST',
+        headers: headers,
+        body: formData,
+      })
+        .then(response => response.json())
+        .then(success => {
+          // Do something with the successful response
+          console.log("success--> ",success)
+        })
+        .catch(error => console.log(error)
+      );
+    }
     render() {
         return (
             <Fragment>
+              <h1 style={{color:"#fff",fontWeight:"bold"}}>Upload</h1>
                 <h4 style={{color:'#fff',fontWeight:"bold" }}>Upload Your Gif file ... </h4>
-                <div className="file-upload-wrapper">
-                    <div>
-                        <form className="d-flex" onSubmit={this._onSubmit}>
-                            <input type="file" id="input-file-now-custom-2" className="file-upload"data-height="500" placeholder="Upload Gif File ..." onKeyDown={this._uploadFileGif}/>
-                            <button className="btn btn-warning btn-rounded ml-3 w-25"  onClick={this._onSubmit}>Upload Gif</button>
+                  <div className="file-upload-wrapper">
+                        <form className="d-flex" onSubmit={this._handleOnSubmit}>
+                            <input type="file" id="input-file-now-custom-2" className="file-upload"data-height="500" placeholder="Upload Gif File ..." accept="image/gif" onChange={this._handleOnChange}/>
+                            <button className="btn btn-warning btn-rounded ml-3 w-25"  onClick={this._handleOnSubmit}>Upload Gif</button>
                         </form>
-                    </div>
-
-                    {/* <div>
-                        <form className="d-flex" onSubmit={this._onSubmit}>
-                            <input type="file" id="input-file-now-custom-2" className="file-upload"data-height="500" placeholder="Upload Url Link..." onKeyDown={this._uploadFileUrl}/>
-                            <button className="btn btn-warning btn-rounded ml-3 w-25" >Upload Url</button>
-                        </form>
-                    </div> */}
-                    </div>
+                  </div>
             </Fragment>
         );
     }

@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import Preview from './Preview';
 
 const apiKey=`K447WmBKHQuT6URO6t6Lxjxuo4bGMNxr`;
-const id = `dyplPAwDGyfSznhJMe`;
+const id = `TtrQVa4RpBtcRSbavu`;
 
 class PreviewComponent extends Component {
     constructor(props) {
@@ -38,7 +38,7 @@ class PreviewComponent extends Component {
     render() { 
         return ( 
             <Fragment>
-                <h1>Feed Preview ...</h1>
+                <h1 style={{color:"#fff",fontWeight:"bold"}}>Feed Preview</h1>
                 {this.state.isRecieved=== true ?<Preview gifs={this.state.gifs.data}/> : null}
             </Fragment> 
         );

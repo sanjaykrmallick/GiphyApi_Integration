@@ -23,13 +23,14 @@ class App extends Component {
         return ( 
             <Fragment>
                 <Router>
-					<header>
+					<header id="mainHeader">
 						<HeaderComponent/>
 					</header>
 					<ToastContainer />
 					<main id="mainDiv" className="container">
 						<Switch>
 							<Route path="/" exact component={Trending} />
+							<Route path="/trending" exact component={Trending} />
 							<Route path="/search" exact component={Search} />
 							<Route path="/upload" exact component={Upload} />
 							<Route path="/preview" exact component={Preview} />

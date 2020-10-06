@@ -1,11 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand:400,500,700');
-/* body{
-    width: 100%;
-    height: 100vh;
-    background-image: url("https://images.unsplash.com/photo-1498550744921-75f79806b8a7?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b0f6908…&auto=format&fit=crop&w=1500&q=80");
-    background-position: center top;
-    background-size: cover;
-} */
+
 body{
     margin: 0;
     padding: 0;
@@ -17,13 +11,15 @@ body{
     background-position: center top;
     background-size: cover;
 }
-#root{
-    /* width: 100%;
-    height: 100vh; */
-    /* background-image: url("https://images.unsplash.com/photo-1498550744921-75f79806b8a7?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b0f6908…&auto=format&fit=crop&w=1500&q=80");
-    background-position: center top;
-    background-size: cover; */
-}
+
 #mainDiv{
     padding-top: 15vh;
 }
+
+#mainHeader{
+    height: 110px;
+   
+    position: fixed;
+    width: 100%;  
+}
+
